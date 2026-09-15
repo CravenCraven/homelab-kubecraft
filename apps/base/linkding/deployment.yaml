@@ -2,6 +2,7 @@
    kind: Deployment
    metadata:
      name: linkding
+     namespace: linkding
    spec:
      replicas: 1
      strategy:
@@ -32,3 +33,4 @@
            - name: linkding-data
              persistentVolumeClaim:
                claimName: linkding-data-pvcc
+
