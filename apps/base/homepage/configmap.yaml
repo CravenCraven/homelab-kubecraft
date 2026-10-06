@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage
+  namespace: homepage
+data:
+  settings.yaml: |
+    title: homelab-kubecraft
+    theme: dark
+    color: slate
+    headerStyle: clean
+    layout:
+      Apps:
+        style: row
+        columns: 3
+      Infra:
+        style: row
+        columns: 3
+
+  services.yaml: |
+    - Apps:
+        - Linkding:
+            href: https://links.projectpattie.com
+            description: Bookmarks
+            icon: linkding.png
+
+    - Infra:
+        - Project Pattie:
+            href: https://projectpattie.com
+            description: Build log
+            icon: si-ghost
+
+  widgets.yaml: |
+    - resources:
+        cpu: true
+        memory: true
+        disk: /
+    - search:
+        provider: duckduckgo
+        target: _blank
+
+  bookmarks.yaml: |
+    - Repos:
+        - homelab-kubecraft:
+            - abbr: KC
+              href: https://github.com/CravenCraven/homelab-kubecraft
+        - homelab:
+            - abbr: HL
+              href: https://github.com/CravenCraven/homelab
+
+  docker.yaml: ""
+  kubernetes.yaml: ""
