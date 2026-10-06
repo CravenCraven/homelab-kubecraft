@@ -14,4 +14,6 @@ data:
       service: http://linkding.linkding.svc.cluster.local:9090
     - hostname: home.projectpattie.com
       service: http://homepage.homepage.svc.cluster.local:3000
+    - hostname: mealie.projectpattie.com
+      service: http://mealie.mealie.svc.cluster.local:9000
     - service: http_status:404
