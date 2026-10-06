@@ -4,3 +4,4 @@ resources:
   - ../base/linkding
   - ../base/cloudflared
   - ../base/homepage
+  - ../base/mealie
