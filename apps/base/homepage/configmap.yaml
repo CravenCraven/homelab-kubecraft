@@ -23,6 +23,10 @@ data:
             href: https://links.projectpattie.com
             description: Bookmarks
             icon: linkding.png
+        - Mealie:
+            href: https://mealie.projectpattie.com
+            description: Recipes
+            icon: mealie.png
 
     - Infra:
         - Project Pattie:
