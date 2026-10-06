@@ -30,13 +30,24 @@ spec:
           periodSeconds: 10
         volumeMounts:
         - name: config
-          mountPath: /app/config
-          readOnly: true
-        - name: logs
-          mountPath: /app/config/logs
+          mountPath: /app/config/settings.yaml
+          subPath: settings.yaml
+        - name: config
+          mountPath: /app/config/services.yaml
+          subPath: services.yaml
+        - name: config
+          mountPath: /app/config/widgets.yaml
+          subPath: widgets.yaml
+        - name: config
+          mountPath: /app/config/bookmarks.yaml
+          subPath: bookmarks.yaml
+        - name: config
+          mountPath: /app/config/docker.yaml
+          subPath: docker.yaml
+        - name: config
+          mountPath: /app/config/kubernetes.yaml
+          subPath: kubernetes.yaml
       volumes:
       - name: config
         configMap:
           name: homepage
-      - name: logs
-        emptyDir: {}
