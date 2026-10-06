@@ -12,4 +12,6 @@ data:
     ingress:
     - hostname: links.projectpattie.com
       service: http://linkding.linkding.svc.cluster.local:9090
+    - hostname: home.projectpattie.com
+      service: http://homepage.homepage.svc.cluster.local:3000
     - service: http_status:404
