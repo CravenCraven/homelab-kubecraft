@@ -27,6 +27,10 @@ data:
             href: https://mealie.projectpattie.com
             description: Recipes
             icon: mealie.png
+        - ntfy:
+            href: https://ntfy.projectpattie.com
+            description: Notifications
+            icon: ntfy.png
 
     - Infra:
         - Project Pattie:
