@@ -16,4 +16,6 @@ data:
       service: http://homepage.homepage.svc.cluster.local:3000
     - hostname: mealie.projectpattie.com
       service: http://mealie.mealie.svc.cluster.local:9000
+    - hostname: ntfy.projectpattie.com
+      service: http://ntfy.ntfy.svc.cluster.local:8080
     - service: http_status:404
