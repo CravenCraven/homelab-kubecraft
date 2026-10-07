@@ -35,6 +35,13 @@
                  value: "/var/lib/ntfy/cache.db"
                - name: NTFY_BEHIND_PROXY
                  value: "true"
+               - name: NTFY_AUTH_FILE
+                 value: "/var/lib/ntfy/user.db"
+               - name: NTFY_AUTH_DEFAULT_ACCESS
+                 value: "deny-all"
+             envFrom:
+               - secretRef:
+                   name: ntfy-auth
              securityContext:
                allowPrivilegeEscalation: false
              volumeMounts:
