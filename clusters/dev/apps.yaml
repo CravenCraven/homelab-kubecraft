@@ -12,3 +12,7 @@ spec:
     name: flux-system-kubecraft
   path: ./apps/staging
   prune: true
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
