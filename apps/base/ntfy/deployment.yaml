@@ -1,0 +1,47 @@
+   apiVersion: apps/v1
+   kind: Deployment
+   metadata:
+     name: ntfy
+     namespace: ntfy
+   spec:
+     replicas: 1
+     strategy:
+       type: Recreate
+     selector:
+       matchLabels:
+         app: ntfy
+     template:
+       metadata:
+         labels:
+           app: ntfy
+       spec:
+         securityContext:
+           fsGroup: 1000
+           runAsUser: 1000
+           runAsGroup: 1000
+         containers:
+           - name: ntfy
+             image: binwiederhier/ntfy:v2.28.0
+             args:
+               - serve
+             ports:
+               - containerPort: 8080
+             env:
+               - name: NTFY_BASE_URL
+                 value: "https://ntfy.projectpattie.com"
+               - name: NTFY_LISTEN_HTTP
+                 value: ":8080"
+               - name: NTFY_CACHE_FILE
+                 value: "/var/lib/ntfy/cache.db"
+               - name: NTFY_BEHIND_PROXY
+                 value: "true"
+             securityContext:
+               allowPrivilegeEscalation: false
+             volumeMounts:
+               - name: ntfy-data
+                 mountPath: /var/lib/ntfy
+         volumes:
+           - name: ntfy-data
+             persistentVolumeClaim:
+               claimName: ntfy-data-pvc
+
