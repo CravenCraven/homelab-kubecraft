@@ -39,6 +39,8 @@
                  value: "/var/lib/ntfy/user.db"
                - name: NTFY_AUTH_DEFAULT_ACCESS
                  value: "deny-all"
+               - name: NTFY_UPSTREAM_BASE_URL
+                 value: "https://ntfy.sh"
              envFrom:
                - secretRef:
                    name: ntfy-auth
