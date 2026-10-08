@@ -6,3 +6,4 @@ resources:
   - ../base/homepage
   - ../base/mealie
   - ../base/ntfy
+  - ../base/littlelink

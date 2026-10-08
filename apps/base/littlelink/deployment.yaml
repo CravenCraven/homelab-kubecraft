@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: littlelink
+  namespace: littlelink
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: littlelink
+  template:
+    metadata:
+      labels:
+        app: littlelink
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+        - name: littlelink
+          image: timothystewart6/littlelink-server@sha256:5659ec2f75f47c1e4a085665255e0be03d6b4787a2667dd6abb458264c7da518
+          ports:
+            - containerPort: 3000
+          env:
+            - name: META_TITLE
+              value: "Craven Craven"
+            - name: NAME
+              value: "Craven Craven"
+            - name: BIO
+              value: "lover of languages real life Swiss army knife"
+            - name: THEME
+              value: "Dark"
+            - name: GITHUB
+              value: "https://github.com/CravenCraven"
+            - name: LINKED_IN
+              value: "https://linkedin.com/in/craven-craven-43b813a8"
+          securityContext:
+            allowPrivilegeEscalation: false
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 20
