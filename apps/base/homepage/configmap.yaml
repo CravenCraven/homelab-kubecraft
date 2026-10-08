@@ -31,6 +31,10 @@ data:
             href: https://ntfy.projectpattie.com
             description: Notifications
             icon: ntfy.png
+        - littlelink:
+            href: https://me.projectpattie.com
+            description: Link page
+            icon: mdi-link-variant
 
     - Infra:
         - Project Pattie:
