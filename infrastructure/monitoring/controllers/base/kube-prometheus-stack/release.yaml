@@ -32,4 +32,8 @@ spec:
     grafana:
        admin:
          existingSecret: grafana-admin
-      
+       ingress:
+         enabled: true
+         ingressClassName: traefik
+         hosts:
+           - grafana.projectpattie.com
