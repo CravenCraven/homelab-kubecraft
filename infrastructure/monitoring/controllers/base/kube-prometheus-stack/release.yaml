@@ -37,3 +37,8 @@ spec:
          ingressClassName: traefik
          hosts:
            - grafana.projectpattie.com
+         tls:
+           - secretName: grafana-tls
+             hosts:
+               - grafana.projectpattie.com
+
