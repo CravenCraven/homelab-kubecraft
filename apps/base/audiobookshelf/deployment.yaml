@@ -7,7 +7,6 @@ spec:
   replicas: 1
   strategy:
     type: Recreate
-    rollingUpdate: null
   selector:
     matchLabels:
       app: audiobookshelf
@@ -16,15 +15,35 @@ spec:
       labels:
         app: audiobookshelf
     spec:
+      initContainers:
+        - name: fix-permissions
+          image: busybox:1.36
+          command: ["sh", "-c", "chown -R 1000:1000 /config /metadata /audiobooks /podcasts"]
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: metadata
+              mountPath: /metadata
+            - name: audiobooks
+              mountPath: /audiobooks
+            - name: podcasts
+              mountPath: /podcasts
       containers:
         - name: audiobookshelf
           image: ghcr.io/advplyr/audiobookshelf:2.37.1
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
           envFrom:
             - configMapRef:
                 name: audiobookshelf-config
           ports:
             - containerPort: 3005
-          volumeMounts:                  # new, through the end of the file
+          volumeMounts:
             - name: config
               mountPath: /config
             - name: metadata
