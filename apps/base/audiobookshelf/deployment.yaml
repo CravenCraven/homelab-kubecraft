@@ -1,10 +1,12 @@
-apiVersion: apps/v1
+iapiVersion: apps/v1
 kind: Deployment
 metadata:
   name: audiobookshelf
   namespace: audiobookshelf
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: audiobookshelf
@@ -21,3 +23,25 @@ spec:
                 name: audiobookshelf-config
           ports:
             - containerPort: 3005
+          volumeMounts:                  # new, through the end of the file
+            - name: config
+              mountPath: /config
+            - name: metadata
+              mountPath: /metadata
+            - name: audiobooks
+              mountPath: /audiobooks
+            - name: podcasts
+              mountPath: /podcasts
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: abs-config
+        - name: metadata
+          persistentVolumeClaim:
+            claimName: abs-metadata
+        - name: audiobooks
+          persistentVolumeClaim:
+            claimName: abs-audiobooks
+        - name: podcasts
+          persistentVolumeClaim:
+            claimName: abs-podcasts
