@@ -34,7 +34,15 @@ data:
         - littlelink:
             href: https://me.projectpattie.com
             description: Link page
-            icon: mdi-link-variant
+            icon: mdi-link-variant.png
+        - n8n:
+           href: https://n8n.projectpattie.com
+           description: Automation
+           icon: n8n.png
+        - Audiobookshelf:
+          href: https://abs.projectpattie.com
+          description: Audiobooks and podcasts
+          icon: audiobookshelf.png
 
     - Infra:
         - Project Pattie:
