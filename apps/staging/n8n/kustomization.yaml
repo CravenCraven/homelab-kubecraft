@@ -4,3 +4,6 @@ namespace: n8n
 resources:
   - ../../base/n8n
   - secret.yaml
+  - ingress.yaml
+patches:
+  - path: deployment-patch.yaml
