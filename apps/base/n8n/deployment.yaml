@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: n8n
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: n8n
+  template:
+    metadata:
+      labels:
+        app: n8n
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
+      containers:
+        - name: n8n
+          image: docker.n8n.io/n8nio/n8n:2.43.7
+          securityContext:
+            allowPrivilegeEscalation: false
+          ports:
+            - name: http
+              containerPort: 5678
+          env:
+            - name: GENERIC_TIMEZONE
+              value: America/New_York
+            - name: TZ
+              value: America/New_York
+            - name: DB_TYPE
+              value: postgresdb
+            - name: DB_POSTGRESDB_HOST
+              value: n8n-postgres
+            - name: DB_POSTGRESDB_PORT
+              value: "5432"
+            - name: DB_POSTGRESDB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: n8n-secrets
+                  key: POSTGRES_DB
+            - name: DB_POSTGRESDB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: n8n-secrets
+                  key: POSTGRES_USER
+            - name: DB_POSTGRESDB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: n8n-secrets
+                  key: POSTGRES_PASSWORD
+            - name: N8N_ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: n8n-secrets
+                  key: N8N_ENCRYPTION_KEY
+          volumeMounts:
+            - name: data
+              mountPath: /home/node/.n8n
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 30
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              memory: 1Gi
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: n8n-data
