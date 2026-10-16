@@ -22,4 +22,6 @@ data:
       service: http://littlelink.littlelink.svc.cluster.local:3000
     - hostname: abs.projectpattie.com
       service: http://audiobookshelf.audiobookshelf.svc.cluster.local:3005
+    - hostname: n8n.projectpattie.com
+      service: http://traefik.kube-system.svc.cluster.local:80
     - service: http_status:404
