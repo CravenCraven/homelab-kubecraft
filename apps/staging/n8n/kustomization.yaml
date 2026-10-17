@@ -5,5 +5,7 @@ resources:
   - ../../base/n8n
   - secret.yaml
   - ingress.yaml
+  - authentik-service.yaml
+  - middleware.yaml
 patches:
   - path: deployment-patch.yaml

@@ -2,16 +2,25 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: n8n
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: n8n-authentik-forward-auth@kubernetescrd
 spec:
   ingressClassName: traefik
   rules:
     - host: n8n.projectpattie.com
       http:
         paths:
-          - backend:
+          - path: /outpost.goauthentik.io
+            pathType: Prefix
+            backend:
+              service:
+                name: authentik-server
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
               service:
                 name: n8n
                 port:
                   number: 80
-            path: /
-            pathType: Prefix
