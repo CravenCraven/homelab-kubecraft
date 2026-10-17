@@ -1,0 +1,52 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: authentik
+  namespace: authentik
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: authentik
+      version: "2026.8.4"
+      sourceRef:
+        kind: HelmRepository
+        name: authentik
+        namespace: authentik
+      interval: 12h
+  values:
+    authentik:
+      error_reporting:
+        enabled: false
+    global:
+      env:
+        - name: AUTHENTIK_BOOTSTRAP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: authentik-secrets
+              key: AUTHENTIK_BOOTSTRAP_PASSWORD
+        - name: AUTHENTIK_BOOTSTRAP_EMAIL
+          value: nicolecraven@gmail.com
+    server:
+      ingress:
+        enabled: true
+        ingressClassName: traefik
+        hosts:
+          - auth.projectpattie.com
+    postgresql:
+      enabled: true
+    redis:
+      enabled: true
+  valuesFrom:
+    - kind: Secret
+      name: authentik-secrets
+      valuesKey: AUTHENTIK_SECRET_KEY
+      targetPath: authentik.secret_key
+    - kind: Secret
+      name: authentik-secrets
+      valuesKey: POSTGRES_PASSWORD
+      targetPath: authentik.postgresql.password
+    - kind: Secret
+      name: authentik-secrets
+      valuesKey: POSTGRES_PASSWORD
+      targetPath: postgresql.auth.password
