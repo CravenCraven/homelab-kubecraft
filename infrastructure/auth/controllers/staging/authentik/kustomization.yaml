@@ -4,4 +4,5 @@ namespace: authentik
 resources:
   - ../../base/authentik/
   - secret.yaml
+  - middleware.yaml
 

@@ -33,6 +33,8 @@ spec:
       ingress:
         enabled: true
         ingressClassName: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: authentik-forwarded-proto-https@kubernetescrd
         hosts:
           - auth.projectpattie.com
     postgresql:
