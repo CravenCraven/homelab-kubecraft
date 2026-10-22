@@ -19,7 +19,7 @@ spec:
         runAsGroup: 1000
       containers:
         - name: littlelink
-          image: timothystewart6/littlelink-server@sha256:5659ec2f75f47c1e4a085665255e0be03d6b4787a2667dd6abb458264c7da518
+          image: timothystewart6/littlelink-server@sha256:0dc5c21e63e1a398e036c851b207a42a740481785af4b937b46ac4caecda1148
           ports:
             - containerPort: 3000
           env:
