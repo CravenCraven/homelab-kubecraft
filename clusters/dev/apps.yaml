@@ -4,9 +4,9 @@ metadata:
   name: apps
   namespace: flux-system
 spec:
- dependsOn:
+  dependsOn:
    - name: auth-controllers
- interval: 10m0s
+  interval: 10m0s
   retryInterval: 1m
   timeout: 5m
   sourceRef:
@@ -17,4 +17,4 @@ spec:
   decryption:
     provider: sops
     secretRef:
-      name: sops-age
+       name: sops-age
