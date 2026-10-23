@@ -32,7 +32,7 @@ spec:
               mountPath: /podcasts
       containers:
         - name: audiobookshelf
-          image: ghcr.io/advplyr/audiobookshelf:2.37.1
+          image: ghcr.io/advplyr/audiobookshelf:2.37.2
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
