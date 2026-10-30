@@ -21,7 +21,7 @@
            runAsGroup: 1000
          containers:
            - name: ntfy
-             image: binwiederhier/ntfy:v2.28.0
+             image: binwiederhier/ntfy:v2.35.0
              args:
                - serve
              ports:
