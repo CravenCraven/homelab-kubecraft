@@ -49,7 +49,10 @@ data:
             href: https://projectpattie.com
             description: Build log
             icon: si-ghost
-
+        - pgAdmin:
+            href: https://pgadmin.projectpattie.com
+            description: Postgres admin
+            icon: pgadmin.png
   widgets.yaml: |
     - resources:
         cpu: true
