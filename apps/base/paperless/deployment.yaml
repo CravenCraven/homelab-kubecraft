@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paperless
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: paperless
+  template:
+    metadata:
+      labels:
+        app: paperless
+    spec:
+      nodeSelector:
+        workload: heavy
+      containers:
+        - name: paperless
+          image: ghcr.io/paperless-ngx/paperless-ngx:3.3.4
+          ports:
+            - name: http
+              containerPort: 8000
+          env:
+            - name: USERMAP_UID
+              value: "1000"
+            - name: USERMAP_GID
+              value: "1000"
+            - name: PAPERLESS_TIME_ZONE
+              value: America/New_York
+            - name: PAPERLESS_OCR_LANGUAGE
+              value: eng
+            - name: PAPERLESS_REDIS
+              value: redis://paperless-redis:6379
+            - name: PAPERLESS_DBHOST
+              value: paperless-postgres
+            - name: PAPERLESS_DBPORT
+              value: "5432"
+            - name: PAPERLESS_DBNAME
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-secrets
+                  key: POSTGRES_DB
+            - name: PAPERLESS_DBUSER
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-secrets
+                  key: POSTGRES_USER
+            - name: PAPERLESS_DBPASS
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-secrets
+                  key: POSTGRES_PASSWORD
+            - name: PAPERLESS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-secrets
+                  key: PAPERLESS_SECRET_KEY
+            - name: PAPERLESS_ADMIN_USER
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-secrets
+                  key: PAPERLESS_ADMIN_USER
+            - name: PAPERLESS_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-secrets
+                  key: PAPERLESS_ADMIN_PASSWORD
+          volumeMounts:
+            - name: data
+              mountPath: /usr/src/paperless/data
+            - name: media
+              mountPath: /usr/src/paperless/media
+          startupProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 10
+            failureThreshold: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 15
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 250m
+              memory: 1Gi
+            limits:
+              memory: 2Gi
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: paperless-data
+        - name: media
+          persistentVolumeClaim:
+            claimName: paperless-media
