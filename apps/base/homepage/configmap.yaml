@@ -43,6 +43,10 @@ data:
             href: https://abs.projectpattie.com
             description: Audiobooks and podcasts
             icon: audiobookshelf.png
+        - Paperless:
+            href: https://paperless.projectpattie.com
+            description: Documents
+            icon: paperless-ngx.png
 
     - Infra:
         - Project Pattie:
