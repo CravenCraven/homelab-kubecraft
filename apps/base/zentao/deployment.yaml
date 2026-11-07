@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zentao
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: zentao
+  template:
+    metadata:
+      labels:
+        app: zentao
+    spec:
+      enableServiceLinks: false
+      nodeSelector:
+        workload: heavy
+      containers:
+        - name: zentao
+          image: easysoft/zentao:22.7-20261104
+          ports:
+            - name: http
+              containerPort: 80
+          env:
+            - name: MYSQL_INTERNAL
+              value: "false"
+            - name: ZT_MYSQL_HOST
+              value: zentao-mysql
+            - name: ZT_MYSQL_PORT
+              value: "3306"
+            - name: ZT_MYSQL_DB
+              valueFrom:
+                secretKeyRef:
+                  name: zentao-secrets
+                  key: MYSQL_DATABASE
+            - name: ZT_MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: zentao-secrets
+                  key: MYSQL_USER
+            - name: ZT_MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: zentao-secrets
+                  key: MYSQL_PASSWORD
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          startupProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 10
+            failureThreshold: 60
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 15
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              memory: 1536Mi
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: zentao-data
