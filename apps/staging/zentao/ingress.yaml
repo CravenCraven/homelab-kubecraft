@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: zentao
   annotations:
-    traefik.ingress.kubernetes.io/router.middlewares: zentao-authentik-forward-auth@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: zentao-forwarded-proto-https@kubernetescrd,zentao-authentik-forward-auth@kubernetescrd
 spec:
   ingressClassName: traefik
   rules:

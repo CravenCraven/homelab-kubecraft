@@ -7,3 +7,4 @@ resources:
   - ingress.yaml
   - authentik-service.yaml
   - middleware.yaml
+  - forwarded-proto.yaml
