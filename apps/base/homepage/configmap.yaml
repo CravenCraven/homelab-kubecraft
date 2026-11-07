@@ -47,6 +47,10 @@ data:
             href: https://paperless.projectpattie.com
             description: Documents
             icon: paperless-ngx.png
+        - ZenTao:
+            href: https://zentao.projectpattie.com
+            description: Project management
+            icon: zentao.png
 
     - Infra:
         - Project Pattie:
