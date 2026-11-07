@@ -27,7 +27,7 @@ spec:
             allowPrivilegeEscalation: false
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8080
           env:
             - name: PGADMIN_DEFAULT_EMAIL
               valueFrom:
