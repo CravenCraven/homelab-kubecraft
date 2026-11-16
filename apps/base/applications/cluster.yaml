@@ -1,0 +1,29 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: applications-db
+  namespace: applications
+spec:
+  instances: 1
+
+  bootstrap:
+    initdb:
+      database: applications
+      owner: applications
+
+  storage:
+    size: 2Gi
+    storageClass: local-path
+
+  # Postgres goes on the Dell, same as the other stateful workloads.
+  affinity:
+    nodeSelector:
+      workload: heavy
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
