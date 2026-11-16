@@ -32,4 +32,8 @@ data:
       service: http://traefik.kube-system.svc.cluster.local:80
     - hostname: zentao.projectpattie.com
       service: http://traefik.kube-system.svc.cluster.local:80
+    - hostname: uptime.projectpattie.com
+      service: http://traefik.kube-system.svc.cluster.local:80
+    - hostname: up.projectpattie.com
+      service: http://traefik.kube-system.svc.cluster.local:80
     - service: http_status:404
