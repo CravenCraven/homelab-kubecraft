@@ -120,3 +120,7 @@ def main():
     print(f"loaded {len(rows)} applications")
     if skipped:
         print(f"skipped {skipped} incomplete row(s)")
+
+
+if __name__ == "__main__":
+    main()
