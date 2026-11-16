@@ -1,57 +1,44 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pgadmin
+  name: uptime-kuma
 spec:
   replicas: 1
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: pgadmin
+      app: uptime-kuma
   template:
     metadata:
       labels:
-        app: pgadmin
+        app: uptime-kuma
     spec:
       nodeSelector:
         workload: light
       securityContext:
-        runAsUser: 5050
-        runAsGroup: 0
-        fsGroup: 5050
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
       containers:
-        - name: pgadmin
-          image: dpage/pgadmin4:9.18.0
+        - name: uptime-kuma
+          image: louislam/uptime-kuma:2.5.11-rootless
           securityContext:
             allowPrivilegeEscalation: false
           ports:
             - name: http
-              containerPort: 8080
-          env:
-            - name: PGADMIN_DEFAULT_EMAIL
-              valueFrom:
-                secretKeyRef:
-                  name: pgadmin-secrets
-                  key: PGADMIN_DEFAULT_EMAIL
-            - name: PGADMIN_DEFAULT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: pgadmin-secrets
-                  key: PGADMIN_DEFAULT_PASSWORD
-            - name: PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION
-              value: "False"
+              containerPort: 3001
           volumeMounts:
             - name: data
-              mountPath: /var/lib/pgadmin
+              mountPath: /app/data
           readinessProbe:
             httpGet:
-              path: /misc/ping
+              path: /
               port: http
             initialDelaySeconds: 15
           livenessProbe:
             httpGet:
-              path: /misc/ping
+              path: /
               port: http
             initialDelaySeconds: 60
           resources:
@@ -63,4 +50,4 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: pgadmin-data
+            claimName: uptime-kuma-data
