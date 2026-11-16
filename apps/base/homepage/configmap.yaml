@@ -61,6 +61,18 @@ data:
             href: https://pgadmin.projectpattie.com
             description: Postgres admin
             icon: pgadmin.png
+        - Uptime Kuma:
+            href: https://uptime.projectpattie.com
+            description: Uptime monitoring
+            icon: uptime-kuma.png
+       - Authentik:
+            href: https://auth.projectpattie.com
+            description: Login and access
+            icon: authentik.png
+        - Grafana:
+            href: https://grafana.projectpattie.com
+            description: Metrics and dashboards
+            icon: grafana.png
   widgets.yaml: |
     - resources:
         cpu: true
