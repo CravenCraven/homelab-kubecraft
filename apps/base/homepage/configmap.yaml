@@ -65,7 +65,7 @@ data:
             href: https://uptime.projectpattie.com
             description: Uptime monitoring
             icon: uptime-kuma.png
-       - Authentik:
+        - Authentik:
             href: https://auth.projectpattie.com
             description: Login and access
             icon: authentik.png
