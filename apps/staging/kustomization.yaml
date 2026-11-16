@@ -13,3 +13,4 @@ resources:
   - pgadmin
   - paperless
   - zentao
+  - uptime-kuma
