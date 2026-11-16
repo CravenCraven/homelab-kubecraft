@@ -7,7 +7,7 @@ The table creates itself on first run.
 """
 
 import os
-from datetime import datetime
+from datetime import date, datetime, timedelta
 
 import psycopg
 from google.oauth2 import service_account
@@ -67,6 +67,12 @@ def to_date(value):
             return datetime.strptime(value, fmt).date()
         except ValueError:
             continue
+    # Sheets hands back a date serial when the column has no date format:
+    # days since 1899-12-30.
+    if value.isdigit():
+        serial = int(value)
+        if 20000 < serial < 80000:
+            return date(1899, 12, 30) + timedelta(days=serial)
     return None
 
 
