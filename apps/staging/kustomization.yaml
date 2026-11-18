@@ -16,3 +16,4 @@ resources:
   - uptime-kuma
   - vaultwarden
   - applications
+  - commafeed

@@ -35,6 +35,10 @@ data:
             href: https://me.projectpattie.com
             description: Link page
             icon: mdi-link-variant
+        - CommaFeed:
+            href: https://feeds.projectpattie.com
+            description: RSS feeds
+            icon: commafeed.png
         - n8n:
             href: https://n8n.projectpattie.com
             description: Automation
