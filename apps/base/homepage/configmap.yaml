@@ -65,6 +65,10 @@ data:
             href: https://uptime.projectpattie.com
             description: Uptime monitoring
             icon: uptime-kuma.png
+        - Vaultwarden:
+            href: https://vault.projectpattie.com
+            description: Passwords
+            icon: vaultwarden.png
         - Authentik:
             href: https://auth.projectpattie.com
             description: Login and access
