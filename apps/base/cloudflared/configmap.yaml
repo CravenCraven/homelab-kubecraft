@@ -36,4 +36,6 @@ data:
       service: http://traefik.kube-system.svc.cluster.local:80
     - hostname: up.projectpattie.com
       service: http://traefik.kube-system.svc.cluster.local:80
+    - hostname: vault.projectpattie.com
+      service: http://traefik.kube-system.svc.cluster.local:80
     - service: http_status:404

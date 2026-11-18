@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vaultwarden
+spec:
+  template:
+    spec:
+      containers:
+        - name: vaultwarden
+          env:
+            - name: DOMAIN
+              value: https://vault.projectpattie.com
+            - name: SIGNUPS_ALLOWED
+              value: "true"
