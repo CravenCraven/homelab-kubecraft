@@ -1,0 +1,30 @@
+# Provider plugins downloaded by `tofu init`. Rebuilt on every init
+.terraform/
+
+# State: OpenTofu's record of every managed resource, with real values.
+# Never in Git, especially in a public repo
+*.tfstate
+*.tfstate.*
+.terraform.tfstate.lock.info
+
+# Saved plans also contain resolved values
+*.tfplan
+
+# Variable files hold environment-specific and sensitive values
+*.tfvars
+*.tfvars.json
+!terraform.tfvars.example
+
+# Local-only overrides, never shared
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Crash logs can include sensitive data from the run
+crash.log
+crash.*.log
+
+# Per-user CLI config (credentials, plugin cache paths)
+.terraformrc
+terraform.rc
