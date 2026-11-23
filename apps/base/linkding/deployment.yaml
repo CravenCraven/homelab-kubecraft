@@ -21,7 +21,7 @@
            runAsGroup: 33
          containers:
            - name: linkding
-             image: sissbruecker/linkding:1.31.0
+             image: sissbruecker/linkding:1.47.0
              ports:
                - containerPort: 9090
              envFrom:
