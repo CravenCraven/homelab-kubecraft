@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wallabag
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: wallabag
+  template:
+    metadata:
+      labels:
+        app: wallabag
+    spec:
+      enableServiceLinks: false
+      nodeSelector:
+        workload: heavy
+      containers:
+        - name: wallabag
+          image: wallabag/wallabag:2.6.19
+          securityContext:
+            allowPrivilegeEscalation: false
+          ports:
+            - name: http
+              containerPort: 80
+          env:
+            # Database (CNPG)
+            - name: SYMFONY__ENV__DATABASE_DRIVER
+              value: pdo_pgsql
+            - name: SYMFONY__ENV__DATABASE_HOST
+              value: wallabag-db-rw
+            - name: SYMFONY__ENV__DATABASE_PORT
+              value: "5432"
+            - name: SYMFONY__ENV__DATABASE_NAME
+              value: wallabag
+            - name: SYMFONY__ENV__DATABASE_USER
+              value: wallabag
+            - name: SYMFONY__ENV__DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: wallabag-db-app
+                  key: password
+            - name: POPULATE_DATABASE
+              value: "False"
+            # Redis
+            - name: SYMFONY__ENV__REDIS_HOST
+              value: wallabag-redis
+            - name: SYMFONY__ENV__REDIS_PORT
+              value: "6379"
+            # Site
+            - name: SYMFONY__ENV__DOMAIN_NAME
+              value: https://wallabag.projectpattie.com
+            - name: SYMFONY__ENV__SERVER_NAME
+              value: wallabag
+            - name: SYMFONY__ENV__FOSUSER_REGISTRATION
+              value: "false"
+            - name: SYMFONY__ENV__FOSUSER_CONFIRMATION
+              value: "false"
+            - name: SYMFONY__ENV__MAILER_DSN
+              value: null://null
+            - name: SYMFONY__ENV__SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: wallabag-secrets
+                  key: SYMFONY__ENV__SECRET
+          volumeMounts:
+            - name: data
+              mountPath: /var/www/wallabag/web/assets/images
+          readinessProbe:
+            httpGet:
+              path: /login
+              port: http
+            initialDelaySeconds: 30
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 90
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              memory: 512Mi
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: wallabag-images

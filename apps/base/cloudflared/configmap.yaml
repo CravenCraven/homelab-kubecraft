@@ -40,4 +40,6 @@ data:
       service: http://traefik.kube-system.svc.cluster.local:80
     - hostname: feeds.projectpattie.com
       service: http://traefik.kube-system.svc.cluster.local:80
+    - hostname: wallabag.projectpattie.com
+      service: http://traefik.kube-system.svc.cluster.local:80
     - service: http_status:404
