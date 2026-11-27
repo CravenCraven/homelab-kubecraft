@@ -73,6 +73,10 @@ data:
             href: https://vault.projectpattie.com
             description: Passwords
             icon: vaultwarden.png
+        - Wallabag:
+            href: https://wallabag.projectpattie.com
+            description: Read-it-later
+            icon: wallabag.png
         - Authentik:
             href: https://auth.projectpattie.com
             description: Login and access
